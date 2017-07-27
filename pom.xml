@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2017, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~      http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.wso2.identity.sample</groupId>
+    <artifactId>extended-jit-associator</artifactId>
+    <packaging>bundle</packaging>
+    <version>1.0-SNAPSHOT</version>
+    <name>extended-jit-associator</name>
+
+    <dependencies>
+        <dependency>
+            <groupId>commons-lang.wso2</groupId>
+            <artifactId>commons-lang</artifactId>
+            <version>2.6.0.wso2v1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.wso2.carbon.identity.framework</groupId>
+            <artifactId>org.wso2.carbon.identity.application.authentication.framework</artifactId>
+            <version>5.7.5</version>
+        </dependency>
+    </dependencies>
+
+
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <encoding>UTF-8</encoding>
+                    <source>1.7</source>
+                    <target>1.7</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-scr-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-bundle-plugin</artifactId>
+                <extensions>true</extensions>
+                <configuration>
+                    <instructions>
+                        <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
+                        <Bundle-Name>${project.artifactId}</Bundle-Name>
+                        <Private-Package>org.wso2.identity.sample.internal</Private-Package>
+                        <Import-Package>
+                            javax.servlet.http; version="${imp.pkg.version.javax.servlet}",
+
+                            org.apache.commons.lang; version="${commons-lang.wso2.osgi.version.range}",
+                            org.apache.commons.logging; version="${commons-logging.osgi.version.range}",
+
+                            org.apache.http; version="${httpcore.osgi.version.range}",
+                            org.apache.http.entity; version="${httpcore.osgi.version.range}",
+
+                            org.apache.http.client; version="${httpcomponents-httpclient.imp.pkg.version.range}",
+                            org.apache.http.client.methods; version="${httpcomponents-httpclient.imp.pkg.version.range}",
+                            org.apache.http.impl.client; version="${httpcomponents-httpclient.imp.pkg.version.range}",
+
+                            org.json; version="${json.wso2.version.range}",
+
+                            org.osgi.service.component; version="${osgi.service.component.imp.pkg.version.range}",
+
+                            org.wso2.carbon; version="${carbon.kernel.imp.pkg.version.range}",
+                            org.wso2.carbon.context; version="${carbon.kernel.imp.pkg.version.range}",
+
+                            org.wso2.carbon.core.util; version="${carbon.kernel.imp.pkg.version.range}",
+
+                            org.wso2.carbon.identity.application.authentication.framework.*;version="${carbon.identity.framework.imp.pkg.version.range}",
+                            org.wso2.carbon.identity.application.common.*;version="${carbon.identity.framework.imp.pkg.version.range}",
+
+                            org.wso2.carbon.identity.core.util;version="${carbon.identity.framework.imp.pkg.version.range}",
+
+                            org.wso2.carbon.identity.user.profile.mgt;
+                            version="${carbon.identity.framework.imp.pkg.version.range}",
+
+                            org.wso2.carbon.idp.mgt; version="${carbon.identity.framework.imp.pkg.version.range}",
+                            org.wso2.carbon.idp.mgt.*; version="${carbon.identity.framework.imp.pkg.version.range}",
+
+                            org.wso2.carbon.registry.core.service; version="${carbon.registry.api.imp.pkg.version.range}",
+
+                            org.wso2.carbon.user.api; version="${carbon.user.api.imp.pkg.version.range}",
+                            org.wso2.carbon.user.core; version="${carbon.kernel.imp.pkg.version.range}",
+                            org.wso2.carbon.user.core.service; version="${carbon.kernel.imp.pkg.version.range}",
+                            org.wso2.carbon.user.core.util; version="${carbon.kernel.imp.pkg.version.range}",
+                            org.wso2.carbon.user.core.tenant; version="${carbon.kernel.imp.pkg.version.range}",
+
+                            org.wso2.carbon.utils.multitenancy; version="${carbon.kernel.imp.pkg.version.range}"
+                        </Import-Package>
+                        <Export-Package>
+                            !org.wso2.identity.sample.internal,
+                            org.wso2.identity.sample.*;version="${extended-jit-associator.exp.pkg.version}"
+                        </Export-Package>
+                    </instructions>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.18</version>
+            </plugin>
+            <plugin>
+                <inherited>false</inherited>
+                <artifactId>maven-clean-plugin</artifactId>
+                <version>2.1</version>
+            </plugin>
+        </plugins>
+
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.felix</groupId>
+                    <artifactId>maven-scr-plugin</artifactId>
+                    <version>1.7.2</version>
+                    <executions>
+                        <execution>
+                            <id>generate-scr-scrdescriptor</id>
+                            <goals>
+                                <goal>scr</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-source-plugin</artifactId>
+                    <version>2.2.1</version>
+                    <executions>
+                        <execution>
+                            <id>attach-sources</id>
+                            <phase>verify</phase>
+                            <goals>
+                                <goal>jar-no-fork</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-assembly-plugin</artifactId>
+                    <version>2.2-beta-2</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-project-info-reports-plugin</artifactId>
+                    <version>2.4</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+
+    </build>
+
+    <repositories>
+        <repository>
+            <id>wso2-nexus</id>
+            <name>WSO2 internal Repository</name>
+            <url>http://maven.wso2.org/nexus/content/groups/wso2-public/</url>
+            <releases>
+                <enabled>true</enabled>
+                <updatePolicy>daily</updatePolicy>
+                <checksumPolicy>ignore</checksumPolicy>
+            </releases>
+        </repository>
+
+        <repository>
+            <id>wso2.releases</id>
+            <name>WSO2 internal Repository</name>
+            <url>http://maven.wso2.org/nexus/content/repositories/releases/</url>
+            <releases>
+                <enabled>true</enabled>
+                <updatePolicy>daily</updatePolicy>
+                <checksumPolicy>ignore</checksumPolicy>
+            </releases>
+        </repository>
+
+        <repository>
+            <id>wso2.snapshots</id>
+            <name>WSO2 Snapshot Repository</name>
+            <url>http://maven.wso2.org/nexus/content/repositories/snapshots/</url>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>daily</updatePolicy>
+            </snapshots>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+        </repository>
+
+    </repositories>
+
+    <properties>
+        <!-- Identity Local Auth BasicAuth version -->
+        <extended-jit-associator.exp.pkg.version>${project.version}
+        </extended-jit-associator.exp.pkg.version>
+
+        <!-- Carbon Kernel version -->
+        <carbon.kernel.version>4.4.5</carbon.kernel.version>
+        <carbon.kernel.imp.pkg.version.range>[4.4.0, 5.0.0)</carbon.kernel.imp.pkg.version.range>
+        <carbon.user.api.imp.pkg.version.range>[1.0.1, 2.0.0)</carbon.user.api.imp.pkg.version.range>
+        <carbon.registry.api.imp.pkg.version.range>[1.0.1, 2.0.0)</carbon.registry.api.imp.pkg.version.range>
+
+        <!-- Carbon Identity Framework version -->
+        <carbon.identity.framework.version>5.7.0</carbon.identity.framework.version>
+        <carbon.identity.framework.imp.pkg.version.range>[5.7.0, 6.0.0)
+        </carbon.identity.framework.imp.pkg.version.range>
+
+        <osgi.framework.imp.pkg.version.range>[1.7.0, 2.0.0)</osgi.framework.imp.pkg.version.range>
+        <osgi.service.component.imp.pkg.version.range>[1.2.0, 2.0.0)</osgi.service.component.imp.pkg.version.range>
+        <imp.pkg.version.javax.servlet>[2.6.0, 3.0.0)</imp.pkg.version.javax.servlet>
+
+        <!-- Commons version-->
+        <commons-logging.osgi.version.range>[1.2,2.0)</commons-logging.osgi.version.range>
+        <commons-lang.wso2.osgi.version.range>[2.6.0,3.0.0)</commons-lang.wso2.osgi.version.range>
+
+        <httpcore.osgi.version.range>[4.3.3.wso2v1, 5.0.0)</httpcore.osgi.version.range>
+        <httpcomponents-httpclient.imp.pkg.version.range>[4.3.1.wso2v2,5.0.0)</httpcomponents-httpclient.imp.pkg.version.range>
+        <json.wso2.version.range>[3.0.0.wso2v1, 4.0.0)</json.wso2.version.range>
+    </properties>
+</project>
