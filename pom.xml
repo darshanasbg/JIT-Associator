@@ -73,6 +73,7 @@
 
                             org.apache.http.client; version="${httpcomponents-httpclient.imp.pkg.version.range}",
                             org.apache.http.client.methods; version="${httpcomponents-httpclient.imp.pkg.version.range}",
+                            org.apache.http.client.utils; version="${httpcomponents-httpclient.imp.pkg.version.range}",
                             org.apache.http.impl.client; version="${httpcomponents-httpclient.imp.pkg.version.range}",
 
                             org.json; version="${json.wso2.version.range}",
@@ -92,7 +93,6 @@
                             org.wso2.carbon.identity.user.profile.mgt;
                             version="${carbon.identity.framework.imp.pkg.version.range}",
 
-                            org.wso2.carbon.idp.mgt; version="${carbon.identity.framework.imp.pkg.version.range}",
                             org.wso2.carbon.idp.mgt.*; version="${carbon.identity.framework.imp.pkg.version.range}",
 
                             org.wso2.carbon.registry.core.service; version="${carbon.registry.api.imp.pkg.version.range}",

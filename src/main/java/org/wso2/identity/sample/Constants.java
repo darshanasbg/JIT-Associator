@@ -23,4 +23,9 @@ package org.wso2.identity.sample;
 public class Constants {
     public static final String IDP_ID = "IdpId";
     public static final String ASSOCIATED_ID = "associatedID";
+    public static final String ENRICHMENT_TRIGGERED = "enrichment_triggered";
+    public static final boolean IS_ENRICHMENT_TRIGGERED_ENABLED = true;
+
+
+    public static final String TELEPHONE_NUMBER = "telephone.number";
 }
