@@ -18,7 +18,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.wso2.identity.sample</groupId>
-    <artifactId>extended-jit-associator</artifactId>
+    <artifactId>org.wso2.identity.sample.listener.scim</artifactId>
     <packaging>bundle</packaging>
     <version>1.0-SNAPSHOT</version>
     <name>extended-jit-associator</name>
@@ -88,7 +88,7 @@
                             org.wso2.carbon.identity.application.authentication.framework.*;version="${carbon.identity.framework.imp.pkg.version.range}",
                             org.wso2.carbon.identity.application.common.*;version="${carbon.identity.framework.imp.pkg.version.range}",
 
-                            org.wso2.carbon.identity.core.util;version="${carbon.identity.framework.imp.pkg.version.range}",
+                            org.wso2.carbon.identity.core.*;version="${carbon.identity.framework.imp.pkg.version.range}",
 
                             org.wso2.carbon.identity.user.profile.mgt;
                             version="${carbon.identity.framework.imp.pkg.version.range}",
@@ -109,6 +109,7 @@
                             !org.wso2.identity.sample.internal,
                             org.wso2.identity.sample.*;version="${extended-jit-associator.exp.pkg.version}"
                         </Export-Package>
+                        <DynamicImport-Package>*</DynamicImport-Package>
                     </instructions>
                 </configuration>
             </plugin>

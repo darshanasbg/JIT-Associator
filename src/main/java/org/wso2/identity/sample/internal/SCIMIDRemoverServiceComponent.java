@@ -21,8 +21,9 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.osgi.service.component.ComponentContext;
 import org.wso2.carbon.registry.core.service.RegistryService;
+import org.wso2.carbon.user.core.listener.UserOperationEventListener;
 import org.wso2.carbon.user.core.service.RealmService;
-import org.wso2.identity.sample.ExtendedJITProvisioningHandler;
+import org.wso2.identity.sample.SCIMIDRemoverUserOperationEventListener;
 
 /**
  * @scr.component name="org.wso2.identity.sample.component" immediate="true"
@@ -34,21 +35,30 @@ import org.wso2.identity.sample.ExtendedJITProvisioningHandler;
  * cardinality="1..1" policy="dynamic" bind="setRegistryService"
  * unbind="unsetRegistryService"
  */
-public class JITAccountAssociatorServiceComponent {
-    private static Log log = LogFactory.getLog(JITAccountAssociatorServiceComponent.class);
+public class SCIMIDRemoverServiceComponent {
+
+    private static Log log = LogFactory.getLog(SCIMIDRemoverServiceComponent.class);
 
     private static RealmService realmService;
     private static RegistryService registryService = null;
 
     protected void activate(ComponentContext ctxt) {
+        log.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> activate()");
+
+
+        //register UserOperationEventListener implementation
+        SCIMIDRemoverUserOperationEventListener scimidRemoverUserOperationEventListener = new SCIMIDRemoverUserOperationEventListener();
+        ctxt.getBundleContext().registerService(UserOperationEventListener.class.getName(),
+                scimidRemoverUserOperationEventListener, null);
+
         if (log.isDebugEnabled()) {
-            log.debug("JIT Account Associator bundle is activated");
+            log.debug("SCIM ID Remover bundle is activated");
         }
     }
 
     protected void deactivate(ComponentContext ctxt) {
         if (log.isDebugEnabled()) {
-            log.debug("JIT Account Associator bundle is deactivated");
+            log.debug("SCIM ID Remover bundle is deactivated");
         }
     }
 
@@ -60,14 +70,14 @@ public class JITAccountAssociatorServiceComponent {
         if (log.isDebugEnabled()) {
             log.debug("Setting the Realm Service");
         }
-        JITAccountAssociatorServiceComponent.realmService = realmService;
+        SCIMIDRemoverServiceComponent.realmService = realmService;
     }
 
     protected void unsetRealmService(RealmService realmService) {
         if (log.isDebugEnabled()) {
             log.debug("UnSetting the Realm Service");
         }
-        JITAccountAssociatorServiceComponent.realmService = null;
+        SCIMIDRemoverServiceComponent.realmService = null;
     }
 
     public static RegistryService getRegistryService() {
@@ -78,13 +88,13 @@ public class JITAccountAssociatorServiceComponent {
         if (log.isDebugEnabled()) {
             log.debug("Setting the Registry Service");
         }
-        JITAccountAssociatorServiceComponent.registryService = registryService;
+        SCIMIDRemoverServiceComponent.registryService = registryService;
     }
 
     protected void unsetRegistryService(RegistryService registryService) {
         if (log.isDebugEnabled()) {
             log.debug("UnSetting the Registry Service");
         }
-        JITAccountAssociatorServiceComponent.registryService = null;
+        SCIMIDRemoverServiceComponent.registryService = null;
     }
 }
